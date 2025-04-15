@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Attach Remove BG</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <script src="./index.js"></script>
+</head>
+<body>
+  <main class="container">
+    <label for="file">Selecciona una imagen:
+      <input type="file" id="file" name="file">
+    </label>
+    <h4 id="spinner" style="text-align: center;" aria-busy="true" hidden>Procesando</h4>
+    <section id="sectionParsed" hidden>
+      <label for="parsed">💬 Resultado:
+        <img id="result-image">
+      </label>
+    </section>
+    <button id="download-btn"><a href="">Descargar Imagen</a></button>
+  </main>
+</body>
+</html>
+
+<style>
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #download-btn {
+    width: 34%;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+</style>
