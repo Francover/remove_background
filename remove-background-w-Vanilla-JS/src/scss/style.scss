@@ -218,6 +218,14 @@ main p {
     margin: 0 auto;
 }
 
+#download-btn {
+    width: 34%;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

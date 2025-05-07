@@ -17,6 +17,7 @@ const OPTIONS = {
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
     input: document.getElementById('file'),
+    label: document.querySelector('.labelFile'),
     resultImage: document.getElementById('result-image'),
     spinner: document.getElementById('mainLoader'),
     processBtn: document.getElementById('processBtn'),
@@ -59,26 +60,47 @@ function setupTooltip({ btnTooltip, btnTooltipMensaje, closeTooltip }) {
 }
 
 function setupFileInput({ input, processBtn, fileNameDisplay, imgDefault, spinner, resultImage, downloadBtn, downloadLink }) {
-  input.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  let selectedFile = null; // Variable para almacenar el archivo seleccionado más reciente
 
+  input.addEventListener('change', (event) => {
+    selectedFile = event.target.files[0]; // Actualizar el archivo seleccionado
+    if (!selectedFile) return;
+
+    // Habilitar el botón "Procesar" al seleccionar una nueva imagen
     processBtn.disabled = false;
-    fileNameDisplay.outerHTML = `<p class="file-name"><strong>Imagen seleccionada: </strong>${file.name}</p>`;
+
+    fileNameDisplay.innerHTML = `<strong>Imagen seleccionada: </strong>${selectedFile.name}`;
     document.querySelector('.processBtn').style.marginTop = "3rem";
 
-    processBtn.addEventListener('click', async () => {
+    // Reemplazar el botón para eliminar listeners previos
+    const newProcessBtn = processBtn.cloneNode(true);
+    processBtn.replaceWith(newProcessBtn);
+
+    newProcessBtn.addEventListener('click', async () => {
+      if (!selectedFile) return; // Asegurarse de que haya un archivo seleccionado
+
+      resultImage.src = '';
+      resultImage.hidden = true; // Ocultar la imagen de resultado
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el lienzo
+
       imgDefault.style.display = 'none';
       spinner.style.display = 'block';
 
       try {
-        const imgBase64 = await processImage(file);
+        const imgBase64 = await processImage(selectedFile); // Usar el archivo más reciente
         updateResultImage(imgBase64, resultImage, downloadLink);
       } catch (error) {
         console.error('Error processing image:', error);
       } finally {
         spinner.style.display = 'none';
-        processBtn.disabled = true;
+        newProcessBtn.disabled = true;
+        input.addEventListener('change', (event) => {
+          newProcessBtn.disabled = false;
+        });
+        // Deshabilitar el botón después de procesar
         downloadBtn.disabled = false;
       }
     });
@@ -101,10 +123,20 @@ async function processImage(file) {
 
 async function updateResultImage(imgBase64, resultImage, downloadLink) {
   const imageSrc = `data:image/png;base64,${imgBase64}`;
-  resultImage.src = imageSrc;
+  
+  // Ocultar la imagen y restablecer el atributo src
+  resultImage.hidden = true;
+  resultImage.src = ''; // Restablecer el src para evitar mostrar una imagen rota
+
+  resultImage.onload = () => {
+    // Mostrar la imagen solo después de que haya cargado
+    resultImage.hidden = false;
+  };
+
+  resultImage.src = imageSrc; // Asignar la nueva fuente
 
   try {
-    const canvas = applyBackground(imageSrc, "#3A96F4");
+    const canvas = applyBackground(imageSrc);
     downloadLink.href = canvas.toDataURL('image/png');
     downloadLink.download = 'result.png';
   } catch (error) {
@@ -112,7 +144,7 @@ async function updateResultImage(imgBase64, resultImage, downloadLink) {
   }
 }
 
-function applyBackground(imageSrc, backgroundColor = "lightblue") {
+function applyBackground(imageSrc) {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -122,8 +154,14 @@ function applyBackground(imageSrc, backgroundColor = "lightblue") {
     canvas.width = img.width;
     canvas.height = img.height;
 
-    // Dibujar el fondo de color
-    ctx.fillStyle = backgroundColor;
+    // Crear el gradiente
+    const gradientFill = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradientFill.addColorStop(0, "#22CCBF"); // Color inicial
+    gradientFill.addColorStop(1, "#2A70C4"); // Color final
+
+
+    // Dibujar el fondo con el gradiente
+    ctx.fillStyle = gradientFill;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Dibujar la imagen sin fondo encima
