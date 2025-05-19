@@ -1,6 +1,13 @@
+import { useState } from 'react';
 import ImageProcessor from './components/ImageProcessor';
+import SectionParsed from './components/SectionParsed'; // Nuevo componente
 
 const App = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [resultImage, setResultImage] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+
   return (
     <>
       <header>
@@ -17,22 +24,19 @@ const App = () => {
         </p>
 
         <section>
-        <ImageProcessor />
+          <ImageProcessor
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
+            setResultImage={setResultImage}
+            isProcessing={isProcessing}
+            setIsProcessing={setIsProcessing}
+            resultImage={resultImage}
+          />
 
-
-          <div id="sectionParsed">
-            Vista previa
-            <img id="imgDefault" src="/src/img/vistaprevia-default.png" alt="Vista previa" />
-
-            <div id="mainLoader">
-              <div className="loader"></div>
-              <h4 id="spinner" aria-busy="true">
-                Procesando
-              </h4>
-            </div>
-
-            <img id="result-image" alt="Imagen procesada" />
-          </div>
+          <SectionParsed
+            resultImage={resultImage}
+            isProcessing={isProcessing}
+          />
         </section>
       </main>
     </>

@@ -1,16 +1,21 @@
-import  Tooltip  from '../components/Tooltip';
+import Tooltip from '../components/Tooltip';
 import { useImageProcessor } from '../hooks/useImageProcessor';
-import { useState, useEffect } from 'react';
+import type { ImageProcessorProps } from '../types/ImageProcessorProps';
+import { useEffect } from 'react';
 
-const ImageProcessor = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [resultImage, setResultImage] = useState<string | null>(null);
+const ImageProcessor: React.FC<ImageProcessorProps> = ({
+  selectedFile,
+  setSelectedFile,
+  setResultImage,
+  isProcessing,
+  setIsProcessing,
+  resultImage
+}) => {
   const { processImage } = useImageProcessor();
 
   useEffect(() => {
-    // Ajustar el margen del botón de procesar dinámicamente
     const processBtn = document.querySelector('.processBtn') as HTMLElement;
+
     if (processBtn) {
       processBtn.style.marginTop = selectedFile ? '2.5rem' : '0';
     }
@@ -19,9 +24,7 @@ const ImageProcessor = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setSelectedFile(file);
-    setResultImage(null); // Resetear la imagen procesada al seleccionar un nuevo archivo
 
-    // Actualizar dinámicamente el nombre del archivo seleccionado
     const fileNameDisplay = document.querySelector('.file-name') as HTMLElement;
     if (fileNameDisplay) {
       fileNameDisplay.innerHTML = file
@@ -30,13 +33,42 @@ const ImageProcessor = () => {
     }
   };
 
+  function applyGradientToImage(base64: string): Promise<string> {
+    return new Promise((resolve) => {
+      const img = new window.Image();
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')!;
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Gradiente
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, "#22CCBF");
+        gradient.addColorStop(1, "#2A70C4");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Imagen procesada encima
+        ctx.drawImage(img, 0, 0);
+
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.src = base64;
+    });
+  }
+
+
   const handleProcessClick = async () => {
     if (!selectedFile) return;
 
     setIsProcessing(true);
     try {
       const processedImage = await processImage(selectedFile);
-      setResultImage(processedImage);
+      if (processedImage) {
+        const imageWithBg = await applyGradientToImage(processedImage);
+        setResultImage(imageWithBg);
+      }
     } catch (error) {
       console.error('Error al procesar la imagen:', error);
     } finally {
@@ -49,7 +81,7 @@ const ImageProcessor = () => {
       <div className="mainSelectFile">
         <div className="pTooltip">
           Selecciona una imagen
-        <Tooltip/>
+          <Tooltip />
         </div>
         <input
           type="file"
@@ -64,7 +96,7 @@ const ImageProcessor = () => {
       </div>
 
       <div className="mainBtnProcess">
-      <button
+        <button
           className="processBtn"
           id="processBtn"
           onClick={handleProcessClick}
@@ -75,13 +107,20 @@ const ImageProcessor = () => {
       </div>
 
       <div className="mainBtnDownload">
-        <button
+        {resultImage ? (
+          <a
             className="downloadBtn"
             id="downloadBtn"
-            disabled={!resultImage}
+            href={resultImage}
+            download="foto-attach.png"
           >
-          Descargar
-        </button>
+            Descargar
+          </a>
+        ) : (
+          <button className="downloadBtn" id="downloadBtn" disabled>
+            Descargar
+          </button>
+        )}
       </div>
     </div>
   );

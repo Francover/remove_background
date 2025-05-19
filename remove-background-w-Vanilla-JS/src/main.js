@@ -80,7 +80,8 @@ function setupFileInput({ input, processBtn, fileNameDisplay, imgDefault, spinne
       if (!selectedFile) return; // Asegurarse de que haya un archivo seleccionado
 
       resultImage.src = '';
-      resultImage.hidden = true; // Ocultar la imagen de resultado
+      resultImage.hidden = true; 
+      resultImage.style.display = 'none';// Ocultar la imagen de resultado
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -124,13 +125,15 @@ async function processImage(file) {
 async function updateResultImage(imgBase64, resultImage, downloadLink) {
   const imageSrc = `data:image/png;base64,${imgBase64}`;
   
-  // Ocultar la imagen y restablecer el atributo src
+  // Ocultar la imagen y restablecer el atributo src.
+  resultImage.style.display = 'none'; 
   resultImage.hidden = true;
   resultImage.src = ''; // Restablecer el src para evitar mostrar una imagen rota
 
   resultImage.onload = () => {
     // Mostrar la imagen solo después de que haya cargado
     resultImage.hidden = false;
+    resultImage.style.display = 'block';
   };
 
   resultImage.src = imageSrc; // Asignar la nueva fuente

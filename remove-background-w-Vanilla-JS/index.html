@@ -2,62 +2,65 @@
 <html lang="en">
 
 <head>
-  <title>Attach Remove BG</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/src/scss/style.scss">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attach Remove BG</title>
+  <link rel="stylesheet" href="/src/scss/styles.scss">
 </head>
 
-<header>
-  <div>
-    <img src="/src/img/logo-white.svg">
-  </div>
-
-</header>
-<main>
-  <h1>Actualiza tu foto profesional</h1>
-  <p>Selecciona una imagen, personalízala con el fondo corporativo de ATTACH y descárgala lista para para usarla en tus
-    canales internos.</p>
-  <section>
-    <div class="setupBg">
-      <div class="mainSelectFile">
-        <p class="pTooltip">Selecciona una imagen<img id="tooltipTrigger" src="/src/img/icon-tooltip.svg" /></p>
-        <p id="tooltipMsg">Formato PNG, tamaño máximo de 5 MB. Asegúrate de que la foto esté tomada de los hombros hacia
-          arriba, buena iluminación y mirando de frente a la cámara.<img id="closeTooltip"
-            src="/src/img/close-btn.png" /></p>
-        <input type="file" id="file" name="file" />
-        <label id="labelFile" for="file">Subir imagen
-          <p class="file-name"></p>
-        </label>
-      </div>
-
-      <div class="mainBtnProcess">
-        <button href="#" class="processBtn" id="processBtn">Procesar</button>
-      </div>
-
-      <div class="mainBtnDownload">
-        <a href="#"><button class="downloadBtn" id="downloadBtn" disabled>Descargar</button></a>
-      </div>
+<body>
+  <header>
+    <div>
+      <img src="/src/img/logo-white.svg" alt="Logo de ATTACH">
     </div>
+  </header>
 
-    <div id="sectionParsed">
-      Vista previa
-      <img id="imgDefault" src="/src/img/vistaprevia-default.png">
+  <main>
+    <h1>Actualiza tu foto profesional</h1>
+    <p>Selecciona una imagen, personalízala con el fondo corporativo de ATTACH y descárgala lista para para usarla en
+      tus
+      canales internos.</p>
 
-      <div id="mainLoader">
-        <div class="loader"></div>
-        <h4 id="spinner" aria-busy="true">Procesando</h4>
+    <section>
+      <div class="setupBg">
+        <div class="mainSelectFile">
+          <p class="pTooltip">Selecciona una imagen
+            <img id="tooltipTrigger" src="/src/img/icon-tooltip.svg">
+              <p id="tooltipMsg">Formato PNG, tamaño máximo de 5 MB. Asegúrate de que la foto esté tomada de los hombros
+                hacia
+                arriba, buena iluminación y mirando de frente a la cámara.<img id="closeTooltip"
+                  src="/src/img/close-btn.png" />
+              </p>
+            </img>
+          </p>
+          <input type="file" id="file" name="file" />
+          <label id="labelFile" for="file">Subir imagen
+            <p class="file-name"></p>
+          </label>
+        </div>
+
+        <div class="mainBtnProcess">
+          <button href="#" class="processBtn" id="processBtn">Procesar</button>
+        </div>
+
+        <div class="mainBtnDownload">
+          <a href="#"><button class="downloadBtn" id="downloadBtn" disabled>Descargar</button></a>
+        </div>
       </div>
 
-      <img id="result-image">
-    </div>
-  </section>
-</main>
+      <div id="sectionParsed">
+        Vista previa
+        <img id="imgDefault" src="/src/img/vistaprevia-default.png">
 
-<footer>
+        <div id="mainLoader">
+          <div class="loader"></div>
+          <h4 id="spinner" aria-busy="true">Procesando</h4>
+        </div>
 
-</footer>
-<script type="module" src="/src/main.js"></script>
+        <img id="result-image">
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>

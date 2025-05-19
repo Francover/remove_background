@@ -10,7 +10,7 @@ $tooltip-bg: #262626;
 $font-family: "Montserrat", sans-serif;
 
 // Mixins
-@mixin flex-center($direction: row, $directionMobile: column, $gap: 0) {
+@mixin flex-center($direction: row, $directionMobile: column,$gap: 0) {
     display: flex;
     flex-direction: $direction;
     align-items: center;
@@ -27,13 +27,11 @@ $font-family: "Montserrat", sans-serif;
     background-color: $bg-color;
     color: $text-color;
     border: none;
-    padding: 0.8rem 0;
+    padding: 0.8rem;
     font-size: 1.1rem;
     text-decoration: none;
     outline: none;
     cursor: pointer;
-    display: block;
-    text-align: center;
 }
 
 // Global styles
@@ -79,8 +77,8 @@ h1 {
     margin-top: 2.5rem;
 
     @media (max-width: 800px) {
-        text-align: center;
-    }
+          text-align: center;
+      }
 }
 
 label,
@@ -89,7 +87,7 @@ label,
 }
 
 #sectionParsed {
-    @include flex-center(column, column, 1.5rem);
+    @include flex-center(column,column,1.5rem);
 
     img {
         width: 27rem;
@@ -123,6 +121,7 @@ label,
 }
 
 #tooltipMsg {
+    display: none;
     font-weight: normal;
     color: white;
     background-color: $tooltip-bg;
@@ -131,29 +130,27 @@ label,
     border-radius: 5px;
     padding: 1.5rem 1rem;
     z-index: 9;
-    top: -6.1rem;
-    left: 0;
-    right: 0;
+    top: -6.7rem;
 
     &::before {
         content: '';
         position: absolute;
-        bottom: 1px;
+        bottom: 0;
         width: 0;
         height: 0;
         border-style: solid;
         border-width: 10px 10px 0 10px;
         border-color: $tooltip-bg transparent transparent transparent;
-        left: 44%;
+        left: 69%;
         transform: translateX(-50%) translateY(100%);
 
         @media (max-width: 800px) {
-            left: 65%;
+            left: 82%;
         }
     }
 
     @media (max-width: 800px) {
-        top: -7rem;
+        top: -7.7rem;
     }
 }
 
@@ -191,18 +188,15 @@ label,
         scale: 0.8;
     }
 
-    .pTooltip {
+    p {
         margin: 1.5rem 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        justify-content: flex-start;
+        @include flex-center(row, row,0.5rem);
     }
 }
 
 .file-name {
     position: absolute;
-    bottom: -4rem;
+    bottom: -3rem;
     font-size: 0.85rem;
     color: #555;
 }
@@ -210,16 +204,16 @@ label,
 .setupBg,
 #sectionParsed {
     width: 49%;
-    @include flex-center(column, column, 0.8rem);
+    @include flex-center(column, column,0.8rem);
 
     @media (max-width: 800px) {
         width: 100%;
         margin-bottom: 3rem;
-    }
+    }   
 }
 
 .setupBg {
-    align-items: normal;
+   align-items: normal;
 }
 
 #result-image {

@@ -23,25 +23,29 @@ export const useImageProcessor = () => {
     setSelectedFile(file);
   };
 
-  const processImage = async () => {
-    if (!selectedFile) return;
+  const processImage = async (file: File): Promise<string | null> => {
+    
+     if (!file) return null;
 
     setIsProcessing(true);
     try {
-      const form = new FormData();
-      form.append('image', selectedFile);
+    const form = new FormData();
+    form.append('image', file);
 
-      const response = await fetch(OPTIONS[MODE].url, {
-        method: 'POST',
-        body: form,
-        headers: OPTIONS[MODE].headers,
-      });
+    const response = await fetch(OPTIONS[MODE].url, {
+      method: 'POST',
+      body: form,
+      headers: OPTIONS[MODE].headers,
+    });
 
-      const data = await response.json();
-      const imgBase64 = data.results[0].entities[0].image;
-      setResultImage(`data:image/png;base64,${imgBase64}`);
+    const data = await response.json();
+    const imgBase64 = data.results[0].entities[0].image;
+    const result = `data:image/png;base64,${imgBase64}`;
+    setResultImage(result);
+    return result;
     } catch (error) {
       console.error('Error processing image:', error);
+      return null;
     } finally {
       setIsProcessing(false);
     }
