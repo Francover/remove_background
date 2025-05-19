@@ -1,2 +1,2 @@
-# REMOVE BACKGROUND WITH RAPIDAPI
-Remove image background with RapidApi
+# REMOVE BACKGROUND WITH REACT Ó PYTHON
+Remove image background¿
