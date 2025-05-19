@@ -1,0 +1,3 @@
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+remove-background-w-Vanilla-JS/* linguist-vendored
