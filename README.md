@@ -24,12 +24,13 @@ Esta aplicación te permite **eliminar el fondo de tus fotos** y personalizarlas
 
 ## 🖼️ Vista previa
 
-![Vista previa de la aplicación](./src/img/vistaprevia-default.png)
+![Vista previa de la aplicación](./vistaprevia.png)
+![Vista previa de la aplicación con la imagen procesada](./vistaprevia_result.png)
 
 ## ❓ Preguntas frecuentes
 
 - **¿Mis fotos se almacenan en algún lugar?**  
-  No, tus imágenes solo se procesan temporalmente para generar el resultado y no se almacenan en el servidor.
+  No, tus imágenes solo se procesan temporalmente para generar el resultado y no se almacensan en el servidor.
 
 - **¿Puedo usar la aplicación en el móvil?**  
   Sí, la aplicación es compatible con dispositivos móviles y de escritorio.
