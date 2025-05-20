@@ -45,7 +45,7 @@ Puedes trabajar con **cualquiera de estas tecnologías** según tu preferencia o
 
 ## 🛠️ ¿Quieres saber cómo funciona el código?
 
-Consulta la [Wiki del repositorio](https://github.com/tuusuario/tu-repo/wiki) para ver detalles técnicos, estructura del proyecto y cómo contribuir.
+Consulta la [Wiki del repositorio](https://github.com/Francover/remove_background/wiki) para ver detalles técnicos, estructura del proyecto y cómo contribuir.
 
 ## 📬 Contacto
 
