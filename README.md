@@ -10,7 +10,15 @@ Esta aplicación te permite **eliminar el fondo de tus fotos** y personalizarlas
 - Aplicar el fondo en la configuración de color
 - Descargar la imagen lista para usar en tus canales internos.
 
-## 🚀 ¿Cómo usar la aplicación?
+## 🚀 ¿Cómo puedes usar este proyecto?
+
+Puedes trabajar con **cualquiera de estas tecnologías** según tu preferencia o necesidad:
+
+- **Python (Flask):** Backend robusto, procesamiento de imágenes y API, frontend clásico con HTML, CSS y JS.
+- **React:** Frontend moderno, componentes reutilizables, experiencia SPA.
+- **Vanilla JS:** Sin frameworks, ideal para entender la lógica pura y el flujo básico.
+
+## 🥷 ¿Cómo usar la aplicación?
 
 1. **Abre la aplicación** en tu navegador.
 2. Haz clic en **"Subir imagen"** y selecciona una foto desde tu dispositivo.
